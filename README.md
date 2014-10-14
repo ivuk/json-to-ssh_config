@@ -29,4 +29,31 @@ $ ./gensshconf.py -s .
 Host aliasname
   HostName fqdnname
   Port 12345
+
+```
+And:
+```json
+{
+    "default":
+    {
+        "IdentityFile":"pathtoidentityfile"
+    },
+    "Host":
+    {
+    "aliasname1":"fqdnname1",
+    "aliasname2":"fqdnname2"
+    }
+}
+```
+Which results in:
+```sh
+$ ./gensshconf.py -s .
+# Content from ./demo2.conf
+Host aliasname1
+  HostName fqdnname1
+  IdentityFile pathtoidentityfile
+Host aliasname2
+  HostName fqdnname2
+  IdentityFile pathtoidentityfile
+
 ```
