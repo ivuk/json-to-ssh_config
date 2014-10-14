@@ -87,3 +87,10 @@ Host *
   VisualHostKey yes
 
 ```
+Note that there are some aspects of ssh_config(5) which are not supported
+directly, such as overriding a set of hosts via wildcards (`*.example.com`).
+That could be hacked around via a combination of some smart file naming and
+existing syntax.
+
+There are two supported output modes, `screen` and `file`, controlled via the
+`-o` parameter. The default value is `screen`.
