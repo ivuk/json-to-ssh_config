@@ -57,3 +57,33 @@ Host aliasname2
   IdentityFile pathtoidentityfile
 
 ```
+The `global.conf` file is a special case, its intended usage is to contain the
+`Host *` settings that apply to all hosts:
+```json
+{
+    "Host":"*",
+    "ControlMaster":"auto",
+    "ControlPath":"somepath",
+    "ForwardAgent":"no",
+    "IdentityFile":"somefile",
+    "IdentitiesOnly":"yes",
+    "Protocol":2,
+    "User":"username",
+    "VisualHostKey":"yes"
+}
+```
+Which results in:
+```sh
+$ ./gensshconf.py -s .
+# Content from ./global.conf
+Host *
+  ControlMaster auto
+  ControlPath somepath
+  ForwardAgent no
+  IdentityFile somefile
+  IdentitiesOnly yes
+  Protocol 2
+  User username
+  VisualHostKey yes
+
+```
