@@ -13,3 +13,20 @@ There are some assumptions that the script makes:
 * All JSON files get {displayed,written} alphabetically, except for `global.conf`,
 which is always last
 
+There are two basic syntax models that are supported:
+
+```json
+{
+    "Host":"aliasname",
+    "HostName":"fqdnname",
+    "Port":12345
+}
+```
+Which results in:
+```sh
+$ ./gensshconf.py -s .
+# Content from ./demo1.conf
+Host aliasname
+  HostName fqdnname
+  Port 12345
+```
