@@ -99,3 +99,5 @@ directory. This can be overriden via the `-f` parameter:
 ```sh
 $ ./gensshconf.py -o file -f ~/.ssh/config
 ```
+This is still a fairly rudimentary implementation, but it seems to work
+properly for me. YMMV disclaimer is implied, as always. :)
