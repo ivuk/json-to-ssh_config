@@ -71,36 +71,37 @@ def parse_files(input_dir, output_type):
             pass
 
     for dict_file_key, dict_file in conf_files.items():
-        out = str()
+        out = list()
         default_values = set()
 
         for inner_key, inner_value in dict_file.items():
             if inner_key == "default":
                 for elem in inner_value.items():
-                    default_values.add('  {0} {1}\n'.format(elem[0], elem[1]))
+                    default_values.add('  {0} {1}'.format(elem[0], elem[1]))
             elif inner_key == "Host":
                 if isinstance(inner_value, dict):
                     for elem in inner_value.items():
-                        out += 'Host {0}\n'.format(elem[0])
-                        out += '  HostName {0}\n'.format(elem[1])
+                        out.append('Host {0}'.format(elem[0]))
+                        out.append('  HostName {0}'.format(elem[1]))
                         if default_values:
                             for elem in default_values:
-                                out += elem
+                                out.append(elem)
                 elif isinstance(inner_value, str):
-                    out += '{0} {1}\n'.format("Host", inner_value)
+                    out.append('Host {0}'.format(inner_value))
                     if default_values:
                         for elem in default_values:
-                            out += elem
+                            out.append(elem)
             else:
-                out += '  {0} {1}\n'.format(inner_key, inner_value)
+                out.append('  {0} {1}'.format(inner_key, inner_value))
 
         if output_type == 'screen':
-            print('# Content from {0}\n{1}'.format(dict_file_key, out))
+            print('# Content from {0}\n{1}'.format(dict_file_key,
+                                                   '\n'.join(out)))
         elif output_type == 'file':
             with os.fdopen(os.open(
                     FILE_NAME, os.O_WRONLY | os.O_CREAT, 0o600), 'a') as f:
                 f.write('# Content from {0}\n{1}\n'.format(dict_file_key,
-                                                           out))
+                                                           '\n'.join(out)))
 
 
 def do_it():
