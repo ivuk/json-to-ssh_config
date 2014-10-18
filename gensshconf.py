@@ -60,6 +60,7 @@ def load_files(input_dir):
 
 def parse_files(input_dir, output_type):
     conf_files = load_files(input_dir)
+    out = list()
 
     # If the output_type is file
     # Try to remove the existing FILE_NAME
@@ -71,8 +72,9 @@ def parse_files(input_dir, output_type):
             pass
 
     for dict_file_key, dict_file in conf_files.items():
-        out = list()
         default_values = set()
+
+        out.append('# Content from {0}'.format(dict_file_key))
 
         for inner_key, inner_value in dict_file.items():
             if inner_key == "default":
@@ -94,14 +96,12 @@ def parse_files(input_dir, output_type):
             else:
                 out.append('  {0} {1}'.format(inner_key, inner_value))
 
-        if output_type == 'screen':
-            print('# Content from {0}\n{1}'.format(dict_file_key,
-                                                   '\n'.join(out)))
-        elif output_type == 'file':
-            with os.fdopen(os.open(
-                    FILE_NAME, os.O_WRONLY | os.O_CREAT, 0o600), 'a') as f:
-                f.write('# Content from {0}\n{1}\n'.format(dict_file_key,
-                                                           '\n'.join(out)))
+    if output_type == 'screen':
+        print('{0}'.format('\n'.join(out)))
+    elif output_type == 'file':
+        with os.fdopen(os.open(
+                FILE_NAME, os.O_WRONLY | os.O_CREAT, 0o600), 'a') as f:
+            f.write('{0}\n'.format('\n'.join(out)))
 
 
 def do_it():
