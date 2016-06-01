@@ -130,7 +130,12 @@ def do_it():
         FILE_NAME = args.file_name
 
     if args.source_dir:
-        parse_files(args.source_dir, args.output)
+        if not os.path.exists(args.source_dir):
+            print("{} does not exist.".format(args.source_dir))
+        elif os.path.isdir(args.source_dir):
+            parse_files(args.source_dir, args.output)
+        else:
+            print("{} is not a directory.".format(args.source_dir))
 
 if __name__ == '__main__':
     do_it()
