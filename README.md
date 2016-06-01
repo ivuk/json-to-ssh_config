@@ -37,15 +37,21 @@ Host aliasname
 And:
 ```json
 {
-    "default":
+    "Options":
     {
-        "IdentityFile":"pathtoidentityfile"
+        "IdentityFile": "pathtoidentityfile",
+        "Port": 12345
     },
-    "Host":
+    "Hosts":
+    [{
+        "Host": "aliasname1",
+        "HostName": "fqdnname1"
+    },
     {
-    "aliasname1":"fqdnname1",
-    "aliasname2":"fqdnname2"
-    }
+        "Host": "aliasname2",
+        "HostName": "fqdnname2",
+        "Port": 23456
+    }]
 }
 ```
 Which results in:
@@ -55,9 +61,11 @@ $ ./gensshconf.py -s .
 Host aliasname1
   HostName fqdnname1
   IdentityFile pathtoidentityfile
+  Port 12345
 Host aliasname2
   HostName fqdnname2
   IdentityFile pathtoidentityfile
+  Port 23456
 
 ```
 The `global.conf` file is a special case, its intended usage is to contain the
