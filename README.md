@@ -64,8 +64,8 @@ Host aliasname1
   Port 12345
 Host aliasname2
   HostName fqdnname2
-  IdentityFile pathtoidentityfile
   Port 23456
+  IdentityFile pathtoidentityfile
 
 ```
 The `global.conf` file is a special case, its intended usage is to contain the
