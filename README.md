@@ -72,15 +72,18 @@ The `global.conf` file is a special case, its intended usage is to contain the
 `Host *` settings that apply to all hosts:
 ```json
 {
-    "Host":"*",
-    "ControlMaster":"auto",
-    "ControlPath":"somepath",
-    "ForwardAgent":"no",
-    "IdentityFile":"somefile",
-    "IdentitiesOnly":"yes",
-    "Protocol":2,
-    "User":"username",
-    "VisualHostKey":"yes"
+    "Hosts":
+    [{
+        "Host": "*",
+        "ControlMaster": "auto",
+        "ControlPath": "somepath",
+        "ForwardAgent": "no",
+        "IdentityFile": "somefile",
+        "IdentitiesOnly": "yes",
+        "Protocol": 2,
+        "User": "username",
+        "VisualHostKey": "yes"
+    }]
 }
 ```
 Which results in:
