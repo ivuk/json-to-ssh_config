@@ -109,7 +109,7 @@ existing syntax.
 There are two supported output modes, `screen` and `file`, controlled via the
 `-o` parameter. The default value is `screen`. When used with the `-o file`
 parameter, the default output file is `outfile-example` in the script
-directory. This can be overriden via the `-f` parameter:
+directory. This can be overridden via the `-f` parameter:
 ```sh
 $ ./gensshconf.py -o file -f ~/.ssh/config
 ```
