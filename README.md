@@ -17,9 +17,12 @@ There are two basic syntax models that are supported:
 
 ```json
 {
-    "Host":"aliasname",
-    "HostName":"fqdnname",
-    "Port":12345
+    "Hosts":
+    [{
+        "Host": "aliasname",
+        "HostName": "fqdnname",
+        "Port": 12345
+    }]
 }
 ```
 Which results in:
