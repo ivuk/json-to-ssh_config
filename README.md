@@ -17,9 +17,12 @@ There are two basic syntax models that are supported:
 
 ```json
 {
-    "Host":"aliasname",
-    "HostName":"fqdnname",
-    "Port":12345
+    "Hosts":
+    [{
+        "Host": "aliasname",
+        "HostName": "fqdnname",
+        "Port": 12345
+    }]
 }
 ```
 Which results in:
@@ -34,15 +37,21 @@ Host aliasname
 And:
 ```json
 {
-    "default":
+    "Options":
     {
-        "IdentityFile":"pathtoidentityfile"
+        "IdentityFile": "pathtoidentityfile",
+        "Port": 12345
     },
-    "Host":
+    "Hosts":
+    [{
+        "Host": "aliasname1",
+        "HostName": "fqdnname1"
+    },
     {
-    "aliasname1":"fqdnname1",
-    "aliasname2":"fqdnname2"
-    }
+        "Host": "aliasname2",
+        "HostName": "fqdnname2",
+        "Port": 23456
+    }]
 }
 ```
 Which results in:
@@ -52,8 +61,10 @@ $ ./gensshconf.py -s .
 Host aliasname1
   HostName fqdnname1
   IdentityFile pathtoidentityfile
+  Port 12345
 Host aliasname2
   HostName fqdnname2
+  Port 23456
   IdentityFile pathtoidentityfile
 
 ```
@@ -61,15 +72,18 @@ The `global.conf` file is a special case, its intended usage is to contain the
 `Host *` settings that apply to all hosts:
 ```json
 {
-    "Host":"*",
-    "ControlMaster":"auto",
-    "ControlPath":"somepath",
-    "ForwardAgent":"no",
-    "IdentityFile":"somefile",
-    "IdentitiesOnly":"yes",
-    "Protocol":2,
-    "User":"username",
-    "VisualHostKey":"yes"
+    "Hosts":
+    [{
+        "Host": "*",
+        "ControlMaster": "auto",
+        "ControlPath": "somepath",
+        "ForwardAgent": "no",
+        "IdentityFile": "somefile",
+        "IdentitiesOnly": "yes",
+        "Protocol": 2,
+        "User": "username",
+        "VisualHostKey": "yes"
+    }]
 }
 ```
 Which results in:
@@ -95,7 +109,7 @@ existing syntax.
 There are two supported output modes, `screen` and `file`, controlled via the
 `-o` parameter. The default value is `screen`. When used with the `-o file`
 parameter, the default output file is `outfile-example` in the script
-directory. This can be overriden via the `-f` parameter:
+directory. This can be overridden via the `-f` parameter:
 ```sh
 $ ./gensshconf.py -o file -f ~/.ssh/config
 ```

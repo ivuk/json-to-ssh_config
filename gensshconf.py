@@ -61,6 +61,7 @@ def load_files(input_dir):
 def parse_files(input_dir, output_type):
     conf_files = load_files(input_dir)
     out = list()
+    host_out = list()
 
     # If the output_type is file
     # Try to remove the existing FILE_NAME
@@ -77,24 +78,27 @@ def parse_files(input_dir, output_type):
         out.append('# Content from {0}'.format(dict_file_key))
 
         for inner_key, inner_value in dict_file.items():
-            if inner_key == "default":
+            if inner_key == "Options":
                 for elem in inner_value.items():
-                    default_values.add('  {0} {1}'.format(elem[0], elem[1]))
-            elif inner_key == "Host":
-                if isinstance(inner_value, dict):
-                    for elem in inner_value.items():
-                        out.append('Host {0}'.format(elem[0]))
-                        out.append('  HostName {0}'.format(elem[1]))
-                        if default_values:
-                            for elem in default_values:
-                                out.append(elem)
-                elif isinstance(inner_value, str):
-                    out.append('Host {0}'.format(inner_value))
+                    default_values.add((elem[0], elem[1]))
+            elif inner_key == "Hosts":
+                for host in inner_value:
+                    [host_out.append('{0} {1}'.format(
+                        host_data[0], host_data[1])) if host_data[0] == "Host"
+                        else host_out.append('  {0} {1}'.format(
+                            host_data[0], host_data[1]))
+                        for host_data in host.items()]
                     if default_values:
-                        for elem in default_values:
-                            out.append(elem)
-            else:
-                out.append('  {0} {1}'.format(inner_key, inner_value))
+                        for default_value in default_values:
+                            if not any(default_value[0] in host_data
+                                       for host_data in host_out):
+                                host_out.append('  {0} {1}'.format(
+                                    default_value[0], default_value[1]))
+
+                    # Write out the host data for current host
+                    [out.append(host_data) for host_data in host_out]
+                    # Clear host data after each host gets processed
+                    del host_out[:]
 
     if output_type == 'screen':
         print('{0}'.format('\n'.join(out)))
@@ -126,7 +130,12 @@ def do_it():
         FILE_NAME = args.file_name
 
     if args.source_dir:
-        parse_files(args.source_dir, args.output)
+        if not os.path.exists(args.source_dir):
+            print("{} does not exist.".format(args.source_dir))
+        elif os.path.isdir(args.source_dir):
+            parse_files(args.source_dir, args.output)
+        else:
+            print("{} is not a directory.".format(args.source_dir))
 
 if __name__ == '__main__':
     do_it()
