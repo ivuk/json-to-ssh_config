@@ -1,6 +1,8 @@
 json-to-ssh_config
 ==================
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 A simple JSON to ssh_config file generator. The basic usage model is that you
 stick all the JSON files into a certain folder (the default value is
 `~/.ssh/confs/`, overrideable via the `-s` parameter), which then in turn get
