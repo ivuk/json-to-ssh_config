@@ -122,8 +122,7 @@ def do_it():
         "-s",
         "--source-dir",
         dest="source_dir",
-        help="Set the source directory from which the files \
-                        will be loaded",
+        help="Set the source directory from which the files will be loaded",
         type=str,
         action="store",
         default=os.path.expanduser("~") + "/.ssh/confs/",
@@ -132,8 +131,7 @@ def do_it():
         "-o",
         "--output",
         dest="output",
-        help="Set the \
-                        output type",
+        help="Set the output type",
         type=str,
         action="store",
         default="screen",
@@ -142,8 +140,7 @@ def do_it():
         "-f",
         "--file",
         dest="file_name",
-        help="Set the file \
-                        name of the output file",
+        help="Set the file name of the output file",
         type=str,
         action="store",
         default=os.path.join(
